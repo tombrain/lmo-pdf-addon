@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+# ein neuer Commit bricht den laufenden Lauf desselben Branches ab
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # wie der LMO: 8.1 die aelteste, 8.5 die neueste unterstuetzte Version
+        php: ['8.1', '8.3', '8.4', '8.5']
+    name: PHP ${{ matrix.php }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: PHP einrichten
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: gd, mbstring, dom
+          coverage: none
+
+      - name: Entwicklung (LMO, PHPUnit, PDF-Parser)
+        run: composer install --no-interaction --no-progress
+
+      - name: Laufzeit des Addons (Dompdf nach addon/pdf/vendor)
+        run: composer install --no-dev --no-interaction --no-progress --working-dir=addon/pdf
+
+      - name: Tests
+        run: vendor/bin/phpunit

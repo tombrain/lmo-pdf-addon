@@ -1,0 +1,6 @@
+# Entwicklung (composer.json im Wurzelverzeichnis)
+/vendor/
+# Laufzeit des Addons: kommt beim Bauen des ZIP dazu (addon/pdf/composer.json)
+/addon/pdf/vendor/
+/.phpunit.result.cache
+/build/

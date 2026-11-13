@@ -1,0 +1,32 @@
+{
+    "name": "lmo/lmo-pdf-addon",
+    "description": "PDF-Addon fuer den Liga Manager Online (Entwicklung und Tests; die Laufzeit-Abhaengigkeiten stehen in addon/pdf/composer.json)",
+    "license": "GPL-3.0-or-later",
+    "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/tombrain/lmo_php8"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "lmo/lmo_php8": "dev-twig",
+        "phpunit/phpunit": "^9.6",
+        "smalot/pdfparser": "^2.11"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lmo\\Addon\\Pdf\\": "addon/pdf/src/",
+            "Lmo\\PdfAddon\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
