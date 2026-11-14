@@ -1,0 +1,29 @@
+{# PDF-Addon fuer den Liga Manager Online
+
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Der Spielplan (Lmo\Addon\Pdf\Spielplan): alle Spieltage, vier je Seite.
+-#}
+{% import '_makros.html.twig' as m %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>{{ name }} - {{ t[104] }}</title>
+{% include '_stil.html.twig' %}
+<style>
+  .seite { page-break-before: always; }
+</style>
+</head>
+<body>
+<header>{{ jetzt }} {{ t[103] }}</header>
+<footer>{{ homepage }}</footer>
+<h1>{{ name }} - {{ t[104] }}</h1>
+{% for tag in spieltage %}
+{% if loop.index0 > 0 and loop.index0 is divisible by(4) %}
+<div class="seite"></div>
+{% endif %}
+{{ m.spiele(tag.spiele, tag.st ~ '. ' ~ text[2], text, t) }}
+{% endfor %}
+</body>
+</html>
