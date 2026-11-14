@@ -51,6 +51,14 @@ final class Instanz
         return $this;
     }
 
+    /** Das neue Addon (addon/pdf, mit seiner Laufzeit in vendor) in die Installation kopieren */
+    public function mitNeuemAddon(): self
+    {
+        self::kopiere(dirname(__DIR__, 2) . '/addon/pdf', $this->lmo() . '/addon/pdf');
+
+        return $this;
+    }
+
     public function lmo(): string
     {
         return $this->ordner . '/lmo';

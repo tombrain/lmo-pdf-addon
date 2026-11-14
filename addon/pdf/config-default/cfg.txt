@@ -1,0 +1,4 @@
+lmo_pdf_homepage=
+lmo_show_gameday=1
+lmo_show_table=1
+lmo_show_nextgameday=1
