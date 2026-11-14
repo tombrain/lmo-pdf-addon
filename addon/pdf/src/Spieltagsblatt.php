@@ -80,13 +80,24 @@ final class Spieltagsblatt
             usort($spiele, static fn (Spiel $a, Spiel $b): int => ($a->anstoss ?? 0) <=> ($b->anstoss ?? 0));
         }
 
-        return array_map(static fn (Spiel $s): array => [
+        return array_map(static fn (Spiel $s): array => self::zeile($s), $spiele);
+    }
+
+    /**
+     * Ein Spiel als Zeile: Datum, Uhrzeit, beide Mannschaften und Ergebnis.
+     *
+     * @param string $namen welcher Name der Mannschaften: 'anzeigename', 'kurzname' oder 'mittelname'
+     * @return array<string, string>
+     */
+    public static function zeile(Spiel $s, string $namen = 'anzeigename'): array
+    {
+        return [
             'datum' => $s->anstoss !== null ? date('d.m.Y', $s->anstoss) : '',
             'zeit' => $s->anstoss !== null ? date('H:i', $s->anstoss) : '',
-            'heim' => $s->heimMannschaft()->anzeigename(),
-            'gast' => $s->gastMannschaft()->anzeigename(),
+            'heim' => $s->heimMannschaft()->$namen(),
+            'gast' => $s->gastMannschaft()->$namen(),
             // eine Wertung am gruenen Tisch mit Stern an der Seite, gegen die gewertet wurde (wie bisher)
             'ergebnis' => $s->istGespielt() ? $s->toreHeimText() . ($s->wertung === 1 ? '*' : '') . ' : ' . $s->toreGastText() . ($s->wertung === 2 ? '*' : '') : '',
-        ], $spiele);
+        ];
     }
 }
