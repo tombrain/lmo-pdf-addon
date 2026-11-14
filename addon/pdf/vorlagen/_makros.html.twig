@@ -1,0 +1,29 @@
+{# PDF-Addon fuer den Liga Manager Online
+
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Gemeinsame Makros der PDF-Seiten: spiele(spiele, titel, text, t), die Spiele eines Spieltags.
+-#}
+{% macro spiele(spiele, titel, text, t) %}
+<table>
+  <caption>{{ titel }}</caption>
+  <tr>
+    <th>{{ t[8] }}</th>
+    <th>{{ text[549] }}</th>
+    <th class="zahl">{{ text[41] }}</th>
+    <th></th>
+    <th>{{ t[6] }}</th>
+    <th class="mitte">{{ t[9] }}</th>
+  </tr>
+{% for s in spiele %}
+  <tr>
+    <td>{{ s.datum }}</td>
+    <td>{{ s.zeit }}</td>
+    <td class="zahl">{{ s.heim }}</td>
+    <td class="mitte">-</td>
+    <td>{{ s.gast }}</td>
+    <td class="mitte">{{ s.ergebnis }}</td>
+  </tr>
+{% endfor %}
+</table>
+{% endmacro %}

@@ -4,27 +4,13 @@
 
   Das Spieltagsblatt (Lmo\Addon\Pdf\Spieltagsblatt): Spieltag, Tabelle, folgender Spieltag.
 -#}
-{% import _self as m %}
+{% import '_makros.html.twig' as m %}
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
 <title>{{ name }} - {{ st }}. {{ text[2] }}</title>
-<style>
-  @page { margin: 18mm 15mm 16mm 15mm; }
-  body { font-family: "DejaVu Sans", sans-serif; font-size: 9pt; color: #000; }
-  header { position: fixed; top: -12mm; left: 0; right: 0; font-size: 7pt; color: #555; text-align: right; }
-  footer { position: fixed; bottom: -10mm; left: 0; right: 0; font-size: 7pt; color: #555; text-align: center; }
-  h1 { font-size: 15pt; margin: 0 0 4mm 0; }
-  table { width: 100%; border-collapse: collapse; margin: 0 0 5mm 0; }
-  caption { font-weight: bold; font-size: 10pt; text-align: left; padding: 0 0 1.5mm 0; }
-  th { border-bottom: 1px solid #000; padding: 1mm 1.5mm; text-align: left; }
-  td { padding: 0.8mm 1.5mm; border-bottom: 0.5px solid #ccc; }
-  .zahl, th.zahl { text-align: right; }
-  .mitte, th.mitte { text-align: center; }
-  .hinweis { font-size: 7.5pt; text-align: center; margin: -3mm 0 5mm 0; }
-  .ende { font-weight: bold; text-align: center; }
-</style>
+{% include '_stil.html.twig' %}
 </head>
 <body>
 <header>{{ jetzt }} {{ t[103] }}</header>
@@ -72,26 +58,3 @@
 {% endif %}
 </body>
 </html>
-{% macro spiele(spiele, titel, text, t) %}
-<table>
-  <caption>{{ titel }}</caption>
-  <tr>
-    <th>{{ t[8] }}</th>
-    <th>{{ text[549] }}</th>
-    <th class="zahl">{{ text[41] }}</th>
-    <th></th>
-    <th>{{ t[6] }}</th>
-    <th class="mitte">{{ t[9] }}</th>
-  </tr>
-{% for s in spiele %}
-  <tr>
-    <td>{{ s.datum }}</td>
-    <td>{{ s.zeit }}</td>
-    <td class="zahl">{{ s.heim }}</td>
-    <td class="mitte">-</td>
-    <td>{{ s.gast }}</td>
-    <td class="mitte">{{ s.ergebnis }}</td>
-  </tr>
-{% endfor %}
-</table>
-{% endmacro %}

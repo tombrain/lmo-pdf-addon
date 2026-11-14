@@ -73,7 +73,7 @@ final class Spieltagsblatt
      *
      * @return list<array<string, string>>
      */
-    private static function spiele(Liga $liga, int $st): array
+    public static function spiele(Liga $liga, int $st): array
     {
         $spiele = array_values(array_filter(iterator_to_array($liga->spiele($st), false), static fn (Spiel $s): bool => $s->heim > 0 && $s->gast > 0));
         if (($liga->optionen['enableGameSort'] ?? '') == '1') {
