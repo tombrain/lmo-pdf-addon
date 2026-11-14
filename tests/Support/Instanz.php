@@ -59,6 +59,22 @@ final class Instanz
         return $this;
     }
 
+    /**
+     * Die Konfiguration des Addons (config/pdf/cfg.txt) setzen; ersetzt die bisherige.
+     *
+     * @param array<string, string> $werte
+     */
+    public function mitKonfiguration(array $werte): self
+    {
+        if (!is_dir($this->lmo() . '/config/pdf')) {
+            mkdir($this->lmo() . '/config/pdf', 0777, true);
+        }
+        $zeilen = array_map(static fn (string $k, string $v): string => $k . '=' . $v . "\n", array_keys($werte), $werte);
+        file_put_contents($this->lmo() . '/config/pdf/cfg.txt', implode('', $zeilen));
+
+        return $this;
+    }
+
     public function lmo(): string
     {
         return $this->ordner . '/lmo';

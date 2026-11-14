@@ -1,0 +1,46 @@
+{# PDF-Addon fuer den Liga Manager Online
+
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Der Teamplan (Lmo\Addon\Pdf\Teamplan): die Spiele einer Mannschaft, Hin- und Rueckrunde je auf
+  einer Seite. Ohne Mannschaft (abschnitte leer) die Bitte, eine zu waehlen.
+-#}
+{% set runden = {hin: t[105], rueck: t[106], alle: t[104]} %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>{{ name }} - {{ t[104] }}{% if mannschaft %} - {{ mannschaft }}{% endif %}</title>
+{% include '_stil.html.twig' %}
+<style>
+  .seite { page-break-before: always; }
+  .bitte { font-size: 14pt; text-align: center; margin-top: 20mm; }
+</style>
+</head>
+<body>
+<header>{{ jetzt }} {{ t[103] }}</header>
+<footer>{{ homepage }}</footer>
+{% for a in abschnitte %}
+{% if not loop.first %}
+<div class="seite"></div>
+{% endif %}
+<h1>{{ name }}</h1>
+<table>
+  <caption>{{ runden[a.runde] }} - {{ mannschaft }}</caption>
+{% for s in a.spiele %}
+  <tr>
+    <td>{{ s.datum }}</td>
+    <td>{{ s.zeit }}</td>
+    <td class="zahl">{% if fett and s.heimEigen %}<b>{{ s.heim }}</b>{% else %}{{ s.heim }}{% endif %}</td>
+    <td class="mitte">-</td>
+    <td>{% if fett and not s.heimEigen %}<b>{{ s.gast }}</b>{% else %}{{ s.gast }}{% endif %}</td>
+    <td class="mitte">{{ s.ergebnis }}</td>
+  </tr>
+{% endfor %}
+</table>
+{% else %}
+<h1>{{ name }}</h1>
+<p class="bitte">{{ text[24] }}</p>
+{% endfor %}
+</body>
+</html>
