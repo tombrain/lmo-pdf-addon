@@ -1,0 +1,77 @@
+{# PDF-Addon fuer den Liga Manager Online
+
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Die Optionsseite in der Administration (Lmo\Addon\Pdf\OptionenController).
+-#}
+{% macro auswahl(name, wert, optionen) %}
+{% for o, beschriftung in optionen %}{% if not loop.first %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endif %}<label><input type="radio" name="x{{ name }}" value="{{ o }}" onClick="dolmoedit()"{% if wert == o %} checked{% endif %}> {{ beschriftung|raw }}</label>{% endfor %}
+{% endmacro %}
+{% import _self as f %}
+{% set zeigen = {'1': t[263], '0': t[264]} %}
+      <table class="lmoMiddle" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+          <th align="center"><h1>{{ t[200]|raw }}</h1></th>
+        </tr>
+        <tr>
+          <td align="center">
+            <form name="lmoedit" action="{{ adresse }}" method="post" onSubmit="return chklmopass()">
+              <input type="hidden" name="action" value="admin">
+              <input type="hidden" name="todo" value="{{ todo }}">
+              <input type="hidden" name="save" value="1">
+              <table class="lmoInner" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <th class="nobr" colspan="2">{{ t[203]|raw }}</th>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[212]|raw }}">{{ t[211]|raw }}</acronym></td>
+                  <td class="nobr"><input class="lmo-formular-input" type="text" name="xlmo_pdf_homepage" size="30" maxlength="80" value="{{ k.lmo_pdf_homepage }}" onChange="dolmoedit()"></td>
+                </tr>
+                <tr>
+                  <th class="nobr" colspan="2">{{ t[204]|raw }}</th>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[272]|raw }}">{{ t[273]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_show_gameday', k.lmo_show_gameday, zeigen) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[272]|raw }}">{{ t[271]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_show_table', k.lmo_show_table, zeigen) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[272]|raw }}">{{ t[110]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_show_nextgameday', k.lmo_show_nextgameday, zeigen) }}</td>
+                </tr>
+                <tr>
+                  <th class="nobr" colspan="2">{{ t[206]|raw }}</th>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[241]|raw }}">{{ t[238]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_pdf_format', k.lmo_pdf_format, {'1': t[239], '0': t[240]}) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[243]|raw }}">{{ t[242]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_pdf_teamfett', k.lmo_pdf_teamfett, {'1': t[244], '0': t[245]}) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[247]|raw }}">{{ t[246]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_pdf_teamnamen', k.lmo_pdf_teamnamen, {'0': t[248], '2': t[249], '1': t[250]}) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[252]|raw }}">{{ t[251]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_pdf_anzeige', k.lmo_pdf_anzeige, {'1': t[253], '0': t[254]}) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[256]|raw }}">{{ t[255]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_pdf_serie', k.lmo_pdf_serie, {'0': t[257], '1': t[258]}) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" colspan="2" align="center">
+                    <input title="{{ text[114]|raw }}" class="lmo-formular-button" type="submit" name="best" value="{{ text[188]|raw }}">
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </td>
+        </tr>
+      </table>

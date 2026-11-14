@@ -10,4 +10,4 @@ if (!defined('PATH_TO_LMO')) {
 }
 
 // PDF-Dokumente zu Spieltag, Spielplan und Teamplan (Lmo\Addon\Pdf\PdfAddon)
-return new \Lmo\Addon\Pdf\PdfAddon();
+return new \Lmo\Addon\Pdf\PdfAddon(__DIR__, PATH_TO_CONFIGDIR);

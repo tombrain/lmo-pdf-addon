@@ -1,0 +1,13 @@
+{# PDF-Addon fuer den Liga Manager Online
+
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Links auf die PDFs (Lmo\Addon\Pdf\PdfAddon), in einem neuen Fenster.
+-#}
+<table class="lmo-pdf" width="100%" cellspacing="0" cellpadding="0" border="0">
+  <tr>
+{% for link in links %}
+    <td align="center"><a href="{{ link.adresse|raw }}" title="{{ link.titel|raw }}" target="_blank" rel="noopener">{{ link.name|raw }}</a></td>
+{% endfor %}
+  </tr>
+</table>
