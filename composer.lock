@@ -83,12 +83,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tombrain/lmo_php8.git",
-                "reference": "f2706c8667e8c5b4b2a7590bd4a05a4f95f37849"
+                "reference": "76ad85d1f52a60e2fd38004b37f2bf252af2bca7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tombrain/lmo_php8/zipball/f2706c8667e8c5b4b2a7590bd4a05a4f95f37849",
-                "reference": "f2706c8667e8c5b4b2a7590bd4a05a4f95f37849",
+                "url": "https://api.github.com/repos/tombrain/lmo_php8/zipball/76ad85d1f52a60e2fd38004b37f2bf252af2bca7",
+                "reference": "76ad85d1f52a60e2fd38004b37f2bf252af2bca7",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +170,7 @@
                 "forum": "https://www.liga-manager-online.org/forum/",
                 "source": "https://github.com/tombrain/lmo_php8/tree/twig"
             },
-            "time": "2026-11-13T10:35:51+00:00"
+            "time": "2026-11-14T17:28:03+00:00"
         },
         {
             "name": "myclabs/deep-copy",
