@@ -1,332 +1,178 @@
-[<img src="https://www.vest-sport.de/forum_files/addon_pdf.svg">](https://www.vest-sport.de/forum)
-# PDF-Addons
+# PDF-Addon für den Liga Manager Online
 
-Dieses PDF Addon Paket enthält den offiziellen GIT-Klon der R&OS PHP PDF-Klasse und 3 PDF Addons verschiedener Autoren
-1.  <a target="_blank" href="https://github.com/rospdf/pdf-php/">ROS PHP Pdf creation class</a> enthält die Source Dateien der PDF-Klasse
+Spieltag, Tabelle, Spielplan und Teamplan als PDF-Dokument, für den
+[LMO mit PHP 8 und Twig](https://github.com/tombrain/lmo_php8).
 
-2. <a target="_blank" href="https://www.liga-manager-online.de/lmo/help/Deutsch/addons/pdf_spielplan.html">PDF Spielplan von timme</a> enthält unter anderem die PDF Ausgabedateien pdf-spielplan.php und pdf-tabelle.php
+Das Addon ist neu geschrieben: Es erzeugt die PDFs mit [Dompdf](https://github.com/dompdf/dompdf) aus
+Twig-Vorlagen und bindet sich über die Erweiterungspunkte des LMO ein. Am LMO selbst muss nichts
+geändert werden. Inhalt, Einstellungen und Aussehen folgen dem bisherigen PDF-Addon
+(siehe [Herkunft](#herkunft)).
 
-3. <a target="_blank" href="https://www.liga-manager-online.de/homepage/homepage/addons/teamplan.html">PDF Teamplan von plastic</a> enthält unter anderem die PDF Ausgabedatei pdf-teamplan.php
+*English summary: [below](#english).*
 
-4. <a target="_blank" href="https://www.liga-manager-online.de/homepage/homepage/addons/teamvergleich.html">PDF Teamvergleich von plastic</a> enthält unter anderem die PDF Ausgabedatei stats_viewp.php
+## Was es kann
 
-Dieses Paket wurde von mir neu geschnürt um diverse festgestellte Bugs zu entfernen und die Möglichkeit der Sprachauswahl aller Dateien zu gewährleisten.
-Ich muss außerdem zugeben das ich nicht den originalen <a href="https://www.liga-manager-online.de/homepage/homepage/download/">LMO 4.0.2a</a>,
-Außerdem wurde noch die Verwendbarkeit der Addons unter PHP7 getestet. Bei mir lief es auch unter PHP Version 7.3.3.
-von der Webseite www.liga-manager-online.de, genommen habe. Sondern den LMO mit PHP7 Unterstützung von meiner Webseite.
-Also alle hier beschriebenen Einstellungen und Codeänderungen beziehen sich auf die <u>LMO_PHP7</u> Version.
+| PDF | Einstieg | Link im LMO |
+|---|---|---|
+| **Spieltagsblatt**: Spieltag, Tabelle bis dahin, folgender Spieltag | `addon/pdf/pdf-tabelle.php?file=<liga>&st=<spieltag>` | unter den Ergebnissen: „Spieltag als PDF-Dokument“ |
+| **Spielplan**: alle Spieltage, vier je Seite | `addon/pdf/pdf-spielplan.php?file=<liga>` | unter den Ergebnissen: „Ligaspielplan als PDF-Dokument“ |
+| **Teamplan**: alle Spiele einer Mannschaft, Hin- und Rückrunde | `addon/pdf/pdf-teamplan.php?file=<liga>&selteam=<nr>` | unter dem Spielplan einer gewählten Mannschaft: „Spielplan als PDF-Dokument“ |
 
+Die Links öffnen das PDF in einem neuen Fenster. Für Pokale gibt es keine PDFs.
 
-Changelog
+In der Administration steht für den Hauptadmin der Menüpunkt **PDF-Design** mit allen Einstellungen.
 
-3.1.0
-  30.03.2021
+## Voraussetzungen
 
-  - Dateiupdate der R&OS Klasse von 0.12.49 -> 0.12.63
-  - Ausgabe der PDF Dateien per bootstrap modal, die Installation dieses Updates setzt ein Update des LMO_ PHP7 voraus. Denn dort liegen die benötigten neuen und die umgeschriebenen Dateien vor.
-    Dadurch fällt die Einstellung im Adminmenü, unter "Globale Einstellungen", weg ob die Ausgabe im gleichen Tab (target='self') oder in einem neuen Tab (target='blank') erfolgen soll.
-    Außerdem wurde der Link zum Download des Adobe Readers entfernt.
+- LMO aus [tombrain/lmo_php8](https://github.com/tombrain/lmo_php8), Branch `twig` (mit den
+  Erweiterungspunkten für Addons nach neuer Art)
+- PHP 8.1 bis 8.5 mit den Erweiterungen `gd`, `mbstring` und `dom` (braucht Dompdf)
 
-3.0.5
-  17.03.2019
-  - Dateiupdate der R&OS Klasse von 0.12.41 -> 0.12.49
+## Installation
 
-3.0.3
-  03.08.2017
-  - Dateiupdate der R&OS Klasse von 0.12.40 -> 0.12.41
-  - sortierte Ausgabe der Partien eines Spieltages in pdf-tabelle.php und 
-    pdf-spielplan.php (wenn in den Grundeistellungen des Ligen Files dieses
-    eingestellt wurde "->Datumssortierung<-". Ansonsten Ausgabe wie in der Adminansicht)
+1. Das ZIP `lmo-pdf-addon-<version>.zip` von den
+   [Releases](https://github.com/tombrain/lmo-pdf-addon/releases) laden.
+2. In den Ordner des LMO entpacken (dorthin, wo `lmo.php` liegt). Es entsteht der Ordner
+   `addon/pdf` mit allem, was das Addon braucht, auch Dompdf in `addon/pdf/vendor`.
+3. Fertig: Die Links erscheinen unter den Ergebnissen und dem Spielplan, der Menüpunkt
+   „PDF-Design“ in der Administration.
 
-3.0.2
-  19.07.2017
-  - Dateiupdate der R&OS Klasse von 0.12.39 -> 0.12.40
-  - Ausgabe der Mannschaftsicon in den Tabellen und Spielplänen mittels
-    C:showimage:'.HTML_iconPDF($tableRow[$key]->name,'teams').' 11>
-    C:showimage:'.HTML_iconPDF($partie->gast->name,'teams').' 9> und 
-    C:showimage:'.HTML_iconPDF($partie->heim->name,'teams').' 9>
-    und dem einfügen einer geänderten HTML_icon Funktion als function HTML_iconPDF()
-    und einer function findImage() als function findImagePDF() in die ini.php.
+Die Einstellungen stehen in `config/pdf/cfg.txt`. Fehlt die Datei, gelten die Vorgaben aus
+`addon/pdf/config-default/cfg.txt`; das erste Speichern auf der Seite „PDF-Design“ legt sie an.
+Ein Update des Addons ersetzt nur `addon/pdf` und lässt die Einstellungen in Ruhe.
 
+### Logo und Wappen
 
-3.0.1
-  08.07.2017
-  - Dateiupdate der R&OS Klasse von 0.12.38 -> 0.12.39
+- **Logo**: eine Bilddatei (PNG, JPG oder GIF) in `img/pdf/`, Vorgabe `logo.png`. Es steht oben auf
+  jeder Seite. Gibt es die Datei nicht, bleibt der Platz leer.
+- **Wappen**: die kleinen Wappen des LMO aus `img/teams/small/`, gesucht wie im LMO selbst.
 
+Die Bilder kommen eingebettet ins PDF. Dompdf lädt nichts aus dem Netz und liest keine Dateien
+außerhalb des Addons.
 
-3.0rc
-  28.04.2017
-  - Einbindung aller einzelnen Addons in einer Addonoberfläche im Adminmenü
-  - Anpassungen an PHP 7
-  - Dateiupdate der R&OS PDF-Klasse von 0.11.6 -> 0.12.38
+## Einstellungen
 
+Alle Werte lassen sich auf der Seite „PDF-Design“ ändern.
 
-2.3
-  10.01.2013
-  - Update der alten PDF-Klasse aus dem CSV-Download des LMO's. Von 0.0.9 -> 0.11.6
+| Schlüssel | Vorgabe | Bedeutung |
+|---|---|---|
+| `lmo_pdf_homepage` | leer | Text am Rand jeder Seite, z. B. die Adresse der Homepage |
+| `lmo_show_pdfimg` | `1` | Logo zeigen |
+| `lmo_pdf_bild` | `logo.png` | Datei des Logos in `img/pdf/` (nur ein Dateiname) |
+| `lmo_show_rectangle` | `1` | Balken links und rechts, die Homepage im linken; ohne steht sie unten |
+| `lmo_pdf_balkenfarbe` | `#0000ff` | Farbe der Balken |
+| `lmo_pdf_schriftfarbe` | `#ffffff` | Farbe der Homepage im Balken |
+| `lmo_show_gameday` | `1` | Spieltagsblatt: den Spieltag zeigen |
+| `lmo_show_table` | `1` | Spieltagsblatt: die Tabelle zeigen |
+| `lmo_show_nextgameday` | `1` | Spieltagsblatt: den folgenden Spieltag zeigen (am letzten: „Saisonende“) |
+| `lmo_pdf_matchday_icon` | `0` | Wappen im Spieltag |
+| `lmo_pdf_table_icon` | `1` | Wappen in der Tabelle |
+| `lmo_pdf_nmatchday_icon` | `0` | Wappen im folgenden Spieltag |
+| `lmo_pdf_schedule_icon` | `0` | Wappen im Spielplan |
+| `lmo_pdf_teamplanicon` | `0` | Wappen im Teamplan |
+| `lmo_pdf_format` | `0` | Teamplan: `0` quer, `1` hoch |
+| `lmo_pdf_anzeige` | `1` | Teamplan: `1` nach Spieltag, `0` nach Datum sortiert |
+| `lmo_pdf_serie` | `1` | Teamplan: `1` Hin- und Rückrunde je auf einer Seite, `0` zusammen |
+| `lmo_pdf_teamnamen` | `0` | Teamplan: `0` langer, `2` mittlerer, `1` kurzer Name |
+| `lmo_pdf_teamfett` | `0` | Teamplan: die gewählte Mannschaft fett |
 
+Ist in der Liga die Sortierung nach Datum eingestellt, stehen die Spiele eines Spieltags nach
+Anstoß sortiert.
 
-2.2
-  16.12.2012
-  - Anpassungen der Originalen PDF Addons aus dem Forum des <a target="_blank" href="https://www.liga-manager-online.de/lmo-forum/">LMO</a>.
+## Umstieg vom alten PDF-Addon
 
-R&OS PHP PDF Class
-Die R&OS Pdf-Klasse wird verwendet um PDF-Dokumente mit PHP zu erzeugen. Dabei werden keine zusätzlichen Module oder Erweiterungen installiert.
-Die R&OS PDF-Klasse kommt mit einer Basisklasse namens "Cpdf.php". Zusätzlich noch mit einer Hilfs-Klasse "Cezpdf.php", um Tabellen zu generieren,
-Hintergründe hinzuzufügen und Paging zu bieten.
-Ich habe die aktuellste stabile Version in diesen Download integriert.
-Die im CSV_LMO enthaltene PDF-Klasse ist schon ein sehr alter Vorläufer, mit der Versionsnummer: 0.0.9.
-Die neue Version unterstützt nun auch UTF-8. Bzw.. es werden nicht UTF-8 kodierte Strings bei Bedarf automatisch in UTF-8 umgewandelt.
-Die neuen Dateien der Klasse überschreiben einige alte aus dem Download der CSV-Version des LMO's.
+Das alte Addon (R&OS-PDF-Klasse, Version 3.x) läuft mit PHP 8 und dem aktuellen LMO nicht mehr; der
+LMO bindet es auch nicht mehr ein.
 
-Installation
-Zur Installation des kompletten Pakets dieses zuerst einmal entpacken. Den entpackten Ordner "lmo_root" öffnen nun sollten dort einige Ordner zu sehen sein. Diese heißen -
+1. Den alten Ordner `addon/pdf` ganz löschen, dann das neue Addon entpacken.
+2. Löschen kann man auch, was das alte Addon sonst mitbrachte: `addon/classlib/classes/pdf/`
+   (die PDF-Klasse) und `lang/pdf/` (die Texte liegen jetzt in `addon/pdf/lang/`).
+3. **Behalten**: `config/pdf/cfg.txt` und `img/pdf/`. Die Einstellungen gelten weiter; die Farben
+   des alten Addons (`RectangleColor*`, `TextColor*`, Werte 0.0 bis 1.0) werden übernommen, bis sie
+   auf der Seite „PDF-Design“ neu gespeichert werden.
+4. Die Code-Änderungen, die das alte Addon in `lmo-adminmain.php` und anderen Dateien des LMO
+   verlangte, entfallen.
 
-  - addons
-  - config
-  - help
-  - img
-  - lang
-alle Ordner kopieren und in das Hauptverzeichnis deines LMO's einfügen.
-Es werden nur einige Schriftarten der alten PDF-Klasse von Wayne Munro, R&OS Ltd überschrieben.
-Das PDF-ADDON ist nun integriert. Weiter geht es mit dem Einbinden der Designoberfläche, des PDF-ADDON, in das Adminmenü.
+Nicht mehr gebraucht werden die Einstellungen zu Schriften, Schriftgrößen, Spaltenbreiten,
+Rasterlinien, Icongrößen und Tabellendesign; das Aussehen kommt jetzt aus den Vorlagen.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Was sich gegenüber dem alten Addon im Inhalt ändert:
 
+- Ungespielte Spiele und fehlende Anstoßzeiten stehen leer statt als `_ : _` oder `__.__.____`.
+- Mit Minuspunkten zeigt die Tabelle die Punkte wie der LMO als „12:0“.
+- Die Spalte der Mannschaften heißt „Mannschaft“ (das alte Addon zeigte dort einen falschen Text).
 
-PDF-Design Oberfläche - Adminmenü
+## Anpassen
 
-Installation
+Das Aussehen steht in den Twig-Vorlagen in `addon/pdf/vorlagen/`:
 
-1. Zuerst einmal wurden alle Dateien schon in Dein LMO Hauptverzeichnis kopiert? Wenn Du diese Frage mit "JA" beantworten kannst dann geht es weiter.
+| Vorlage | Inhalt |
+|---|---|
+| `_stil.html.twig` | Stil aller PDFs (Ränder, Schrift, Tabellen, Balken) |
+| `_rahmen.html.twig` | was auf jeder Seite steht: Zeit, Logo, Balken, Homepage |
+| `_makros.html.twig` | die Tabelle der Spiele eines Spieltags |
+| `spieltag.html.twig`, `spielplan.html.twig`, `teamplan.html.twig` | die drei PDFs |
+| `links.html.twig`, `admin_optionen.html.twig` | die Links im LMO und die Seite „PDF-Design“ |
 
-2. Du öffnest mit einem Texteditor die Datei 
-   - lmo-adminmain.php
-Diese befindet sich im Hauptverzeichnis Deines LMO's.
+Wer sie ändert, sollte das vor einem Update sichern; das ZIP bringt die mitgelieferten Vorlagen mit.
 
-1. Änderung
-Die Zeilen 206 - 210 sehen folgendermaßen aus.
+## Entwicklung
 
+Der Code des Addons liegt in `addon/pdf/src` (Namensraum `Lmo\Addon\Pdf`, PHP 8.1 mit
+`strict_types`). Die Tests laufen gegen einen echten LMO: Composer holt `lmo/lmo_php8` (Branch
+`twig`), die Tests bauen daraus eine Installation in einem temporären Ordner.
 
-```php+HTML
-    /*Viewer-Addon*/
-    elseif($todo=="vieweroptions"){
-      require(PATH_TO_ADDONDIR."/viewer/lmo-adminvieweroptions.php");
-    }
-    /*Viewer-Addon*/
+```sh
+composer install                                   # LMO, PHPUnit, PDF-Parser
+composer install --no-dev --working-dir=addon/pdf  # Dompdf nach addon/pdf/vendor
+vendor/bin/phpunit
 ```
 
-<u>unter</u> die letzte Zeile
-"/*Viewer-Addon*/"
-fügst Du folgenden Code ein.
+- `tests/altes-addon/` enthält das alte Addon als Referenz. `AltesAddonTest` hält seinen Inhalt
+  als Text fest (`tests/__snapshots__/alt/`); die Tests der neuen PDFs vergleichen damit Partien,
+  Ergebnisse und Tabelle.
+- Die CI (`.github/workflows/tests.yml`) testet mit PHP 8.1, 8.3, 8.4 und 8.5.
+- Ein Tag `v*` baut das ZIP und legt es als Release an (`.github/workflows/release.yml`).
 
+## Herkunft
 
-```php+HTML
-    /*PDF-Addon*/
-    elseif($todo=="pdfoptions"){
-      require(PATH_TO_ADDONDIR."/pdf/lmo-adminpdfoptions.inc.php");
-    }
-    /*PDF-Addon*/
-```
+Neu geschrieben 2026 für den LMO mit Twig, nach
 
+- dem PDF-Addon von henshingly (Dietmar Kersting),
+  [henshingly/lmo-pdf-addon](https://github.com/henshingly/lmo-pdf-addon), Version 3.2.0,
+- dem PDF-Spielplan von Tim Schumacher (timme) und Torsten Hofmann,
+- dem Teamplan von plastic (HT).
 
-danach sollte es so aussehen.
+Die R&OS-PDF-Klasse von Wayne Munro und der Teamvergleich gehören nicht mehr zum Addon.
 
+## Lizenz
 
-```php+HTML
-    /*Viewer-Addon*/
-    elseif($todo=="vieweroptions"){
-      require(PATH_TO_ADDONDIR."/viewer/lmo-adminvieweroptions.php");
-    }
-    /*Viewer-Addon*/
-    /*PDF-Addon*/
-    elseif($todo=="pdfoptions"){
-      require(PATH_TO_ADDONDIR."/pdf/lmo-adminpdfoptions.inc.php");
-    }
-    /*PDF-Addon*/
-```
+GNU General Public License, Version 3 oder später (`GPL-3.0-or-later`), siehe [LICENSE](LICENSE).
+Dompdf steht unter der LGPL 2.1.
 
+## Changelog
 
+### 4.0.0 – unveröffentlicht
 
-2. Änderung
-Nun zum nächsten Codeeinfügen. Es sind die Zeilen 150 - 152. Die sollten so aussehen.
+- Neu geschrieben mit Dompdf und Twig für den LMO mit PHP 8 (Branch `twig`).
+- Einbindung über die Erweiterungspunkte des LMO; keine Änderungen am LMO mehr nötig.
+- Spieltagsblatt, Spielplan und Teamplan mit den bisherigen Einstellungen.
+- Farben von Balken und Homepage neu als Farbwähler (`lmo_pdf_balkenfarbe`,
+  `lmo_pdf_schriftfarbe`); die alten Werte werden übernommen.
+- Weggefallen: R&OS-PDF-Klasse, Teamvergleich, Einstellungen zu Schriften und Maßen,
+  Farbhilfe-PDFs.
 
+### Bis 3.2.0 (henshingly)
 
-```php+HTML
-    /*Viewer-Addon*/
-    $viewer_addr_optionen = $_SERVER['PHP_SELF']."?action=admin&amp;todo=vieweroptions";
-    /*Viewer-Addon*/
-```
+Die Geschichte des alten Addons (2.2 von 2012 bis 3.2.0 von 2023) steht in
+[henshingly/lmo-pdf-addon](https://github.com/henshingly/lmo-pdf-addon).
 
+## English
 
-Darunter (<u>nach</u> "/*PDF-Addon*/") folgenden Code einfügen.
-
-
-```php+HTML
-    /*PDF-Addon*/
-    $pdf_addr_optionen = $_SERVER['PHP_SELF']."?action=admin&amp;todo=pdfoptions";
-    /*PDF-Addon*/
-```
-
-
-der Codebereich sollte nun so aussehen.
-
-
-```php+HTML
-    /*Viewer-Addon*/
-    $viewer_addr_optionen = $_SERVER['PHP_SELF']."?action=admin&amp;todo=vieweroptions";
-    /*Viewer-Addon*/
-    /*PDF-Addon*/
-    $pdf_addr_optionen = $_SERVER['PHP_SELF']."?action=admin&amp;todo=pdfoptions";
-    /*PDF-Addon*/
-```
-
-
-3. Änderung
-kommen wir nun zum letzten einfügen von PHP Code in der lmo-admimain.php.
-Die Zeilen 104 - 106 sehen so aus.
-
-
-```php+HTML
-    echo $text['viewer'][20];
-  }
-  /*Viewer-Addon*/
-```
-
-<u>darunter</u> nun den letzten Code einfügen. (wieder nach dem "/*Viewer-Addon*/")
-
-
-```php+HTML
-  /*PDF-Addon*/
-  echo "&nbsp;";
-  if (($todo!="pdfoptions")){
-    echo "<a href='{$adda}pdfoptions' onclick='return chklmolink();' title='{$text['pdf'][201]}'>{$text['pdf'][200]}</a>";
-  } else {
-    echo $text['pdf'][200];
-  }
-  /*PDF-Addon*/
-```
-
-
-der gesamte Codebereich sollte nun so aussehen.
-
-
-```php+HTML
-    echo $text['viewer'][20];
-  }
-  /*Viewer-Addon*/
-  /*PDF-Addon*/
-  echo "&nbsp;";
-  if (($todo!="pdfoptions")){
-    echo "<a href='{$adda}pdfoptions' onclick='return chklmolink();' title='{$text['pdf'][201]}'>{$text['pdf'][200]}</a>";
-  } else {
-    echo $text['pdf'][200];
-  }
-  /*PDF-Addon*/
-```
-
-
-
-Das war es auch schon für diesen Teil mit den Änderungen im Code. Die oberen 3 Codeänderungen haben nun die Ansicht des Adminbereiches um einen neuen Menüpunkt erweitert.
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-PDF Spielplan
-
-Ermöglicht das Erstellen von Spielplänen im PDF-Format.
-Nach der erfolgreichen Einbindung erscheint unterhalb der Links 'Aktuellen Spieltag drucken' ein weiterer Link namens 'Spieltag als PDF-Dokument'.
-Dieser zeigt den aktuellen Spieltag, die aktuelle Tabelle und den folgenden Spieltag in einer PDF Datei an.
-Unter dem Link 'Ligaspielplan drucken' erscheint der Link 'Ligaspielplan als PDF-Dokument'.
-Beim betätigen dieses Links erscheint eine Ausgabe aller Spieltage der Liga als PDF Datei.
-
-
-Installation
-
-1. Zuerst einmal, du hast die Dateien aus der Installation der R&OS PHP PDF Class schon in Deinen LMO kopierst.
-
-2. Nun öffnest Du die Datei
-   - lmo-showmain2.php
-Diese befindet sich im Hauptverzeichnis Deines LMO's.
-Die Zeilen 244, 245 und 246 sehen folgendermaßen aus.
-
-
-```php+HTML
-        $output_savehtml.=ob_get_contents();ob_end_clean();
-  }
-}
-```
-
-<u>nach der ERSTEN schließenden Klammer</u> "}" (Zeile 245) fügst Du folgenden Code ein.
-
-
-```php+HTML
-  // PDF ADDON BEGIN
-  if (file_exists(PATH_TO_ADDONDIR.'/pdf/lmo-showmain2.inc.php'))
-  include(PATH_TO_ADDONDIR.'/pdf/lmo-showmain2.inc.php');
-  // PDF ADDON END
-```
-
-
-danach sollte es so aussehen.
-
-
-```php+HTML
-        $output_savehtml.=ob_get_contents();ob_end_clean();
-  }
-  // PDF ADDON BEGIN
-  if (file_exists(PATH_TO_ADDONDIR.'/pdf/lmo-showmain2.inc.php'))
-  include(PATH_TO_ADDONDIR.'/pdf/lmo-showmain2.inc.php');
-  // PDF ADDON END
-}
-```
-
-Das war es schon mit der Einbindung des PDF-Addon Spielplan
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-PDF Teamplan
-
-Ermöglicht die Ausgabe im Link Spielpläne des LMO in einer PDF Ausgabe.
-Hier werden die gezeigten Partien (der ganzen Session) einer ausgewählten Mannschaft als PDF-Dokument dargestellt.
-Nach der Installation erscheint unterhalb des Auswahlfensters 'Spielpläne' ein neuer Link 'Spielplan als PDF-Dokument'.
-
-Installation
-
-1. Zuerst einmal, du hast die Dateien aus der Installation der R&OS PHP PDF Class schon in Deinen LMO kopierst.
-
-2. Nun öffnest Du folgende Datei aus dem Hauptverzeichnis Deines LMO's
-     - lmo-showprogram.php
-<u>nach die letzte Zeile</u> (Zeile 161)
-
-```php+HTML
-}?>
-```
-
-
-folgendes einfügen
-
-
-```php+HTML
-<?php
-// Teamplan ADDON BEGIN
-if (file_exists(PATH_TO_ADDONDIR.'/pdf/lmo-showprogram.inc.php'))
-include(PATH_TO_ADDONDIR.'/pdf/lmo-showprogram.inc.php');
-// Teamplan ADDON END
-?>
-```
-
-
-danach sollte es so aussehen.
-
-
-```php+HTML
-}?>
-<?php
-// Teamplan ADDON BEGIN
-if (file_exists(PATH_TO_ADDONDIR.'/pdf/lmo-showprogram.inc.php'))
-include(PATH_TO_ADDONDIR.'/pdf/lmo-showprogram.inc.php');
-// Teamplan ADDON END
-?>
-```
-
-Das war es schon mit der Einbindung des PDF-Addon Teamplan
+PDF documents of matchday, table, fixtures and team schedule for the
+[Liga Manager Online with PHP 8 and Twig](https://github.com/tombrain/lmo_php8), rewritten with
+Dompdf and Twig. Download the ZIP from the releases, unpack it into the LMO folder (it creates
+`addon/pdf`) and you are done: links appear below the results and the fixtures, and the admin
+menu gets the page “PDF-Design” for all settings. Settings of the old add-on in
+`config/pdf/cfg.txt` keep working; delete the old `addon/pdf` folder first. Requires PHP 8.1 to
+8.5 with `gd`, `mbstring` and `dom`. License: GPL-3.0-or-later.

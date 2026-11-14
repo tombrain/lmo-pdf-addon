@@ -36,10 +36,10 @@ jobs:
       - name: ZIP bauen
         run: |
           mkdir -p build
-          zip -qr "build/${{ steps.name.outputs.datei }}" addon/pdf LICENSE
+          zip -qr "build/${{ steps.name.outputs.datei }}" addon/pdf LICENSE README.md ReadMe.txt
           # was zum Laufen da sein muss
           unzip -l "build/${{ steps.name.outputs.datei }}" > build/inhalt.txt
-          for datei in addon/pdf/addon.php addon/pdf/pdf-tabelle.php addon/pdf/vendor/autoload.php addon/pdf/vendor/dompdf/dompdf/src/Dompdf.php addon/pdf/config-default/cfg.txt LICENSE; do
+          for datei in addon/pdf/addon.php addon/pdf/pdf-tabelle.php addon/pdf/vendor/autoload.php addon/pdf/vendor/dompdf/dompdf/src/Dompdf.php addon/pdf/config-default/cfg.txt LICENSE README.md ReadMe.txt; do
             grep -q " ${datei}\$" build/inhalt.txt || { echo "fehlt im ZIP: ${datei}"; exit 1; }
           done
 
