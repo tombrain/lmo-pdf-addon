@@ -1,0 +1,17 @@
+{# PDF-Addon fuer den Liga Manager Online
+
+  SPDX-License-Identifier: GPL-3.0-or-later
+
+  Was auf jeder Seite steht: Zeit der Erzeugung, Logo, Balken mit der Homepage (sonst die Homepage
+  unten).
+-#}
+<header>{{ jetzt }} {{ t[103] }}</header>
+{% if g.logo %}
+<div class="logo"><img src="{{ g.logo }}" alt=""></div>
+{% endif %}
+{% if g.balken %}
+<div class="balken links"><div class="homepage">{{ homepage }}</div></div>
+<div class="balken rechts"></div>
+{% else %}
+<footer>{{ homepage }}</footer>
+{% endif %}

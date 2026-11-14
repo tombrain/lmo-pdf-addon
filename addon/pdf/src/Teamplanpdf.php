@@ -37,13 +37,13 @@ final class Teamplanpdf extends PdfSeite
         );
         $ausrichtung = $this->wert('lmo_pdf_format', '0') == '1' ? 'portrait' : 'landscape';
         if ($werte === null) {
-            return $this->pdf('teamplan.html.twig', ['name' => $liga->einstellungen()->name(), 'mannschaft' => '', 'abschnitte' => [], 'jetzt' => $jetzt], $this->t(104), $ausrichtung);
+            return $this->pdf('teamplan.html.twig', ['name' => $liga->einstellungen()->name(), 'mannschaft' => '', 'abschnitte' => [], 'jetzt' => $jetzt], $this->t(104), $liga, [], $ausrichtung);
         }
 
         // Dateiname wie bisher: "Spielplan_<Mannschaft>"
         return $this->pdf('teamplan.html.twig', $werte + [
             'jetzt' => $jetzt,
             'fett' => $this->wert('lmo_pdf_teamfett', '0') == '1',
-        ], $this->t(104) . '_' . $werte['mannschaft'], $ausrichtung);
+        ], $this->t(104) . '_' . $werte['mannschaft'], $liga, ['teamplan'], $ausrichtung);
     }
 }

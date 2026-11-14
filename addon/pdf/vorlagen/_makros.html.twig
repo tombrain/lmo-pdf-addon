@@ -2,9 +2,10 @@
 
   SPDX-License-Identifier: GPL-3.0-or-later
 
-  Gemeinsame Makros der PDF-Seiten: spiele(spiele, titel, text, t), die Spiele eines Spieltags.
+  Gemeinsame Makros der PDF-Seiten: spiele(spiele, titel, text, t, wappen), die Spiele eines Spieltags;
+  wappen: Name => Bild ({} ohne).
 -#}
-{% macro spiele(spiele, titel, text, t) %}
+{% macro spiele(spiele, titel, text, t, wappen = {}) %}
 <table>
   <caption>{{ titel }}</caption>
   <tr>
@@ -19,9 +20,9 @@
   <tr>
     <td>{{ s.datum }}</td>
     <td>{{ s.zeit }}</td>
-    <td class="zahl">{{ s.heim }}</td>
+    <td class="zahl">{{ s.heim }}{% if wappen[s.heim] is defined %} <img class="wappen" src="{{ wappen[s.heim] }}" alt="">{% endif %}</td>
     <td class="mitte">-</td>
-    <td>{{ s.gast }}</td>
+    <td>{% if wappen[s.gast] is defined %}<img class="wappen" src="{{ wappen[s.gast] }}" alt=""> {% endif %}{{ s.gast }}</td>
     <td class="mitte">{{ s.ergebnis }}</td>
   </tr>
 {% endfor %}

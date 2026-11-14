@@ -13,11 +13,10 @@
 {% include '_stil.html.twig' %}
 </head>
 <body>
-<header>{{ jetzt }} {{ t[103] }}</header>
-<footer>{{ homepage }}</footer>
+{% include '_rahmen.html.twig' %}
 <h1>{{ name }}</h1>
 {% if zeigen.spieltag %}
-{{ m.spiele(spiele, st ~ '. ' ~ text[2], text, t) }}
+{{ m.spiele(spiele, st ~ '. ' ~ text[2], text, t, g.mitWappen.spieltag ? g.wappen : {}) }}
 {% endif %}
 {% if zeigen.tabelle %}
 <table>
@@ -36,7 +35,7 @@
 {% for z in tabelle %}
   <tr>
     <td class="zahl">{{ z.platz }}</td>
-    <td>{{ z.name }}</td>
+    <td>{% if g.mitWappen.tabelle and g.wappen[z.name] is defined %}<img class="wappen" src="{{ g.wappen[z.name] }}" alt=""> {% endif %}{{ z.name }}</td>
     <td class="zahl">{{ z.spiele }}</td>
     <td class="zahl">{{ z.siege }}</td>
     <td class="zahl">{{ z.unentschieden }}</td>
@@ -51,7 +50,7 @@
 {% endif %}
 {% if zeigen.folge %}
 {% if folge %}
-{{ m.spiele(folge.spiele, folge.st ~ '. ' ~ text[2], text, t) }}
+{{ m.spiele(folge.spiele, folge.st ~ '. ' ~ text[2], text, t, g.mitWappen.folge ? g.wappen : {}) }}
 {% else %}
 <p class="ende">{{ text[568] }}</p>
 {% endif %}

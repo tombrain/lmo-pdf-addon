@@ -14,7 +14,8 @@ $lmo_pdf = (new \Lmo\Addon\Pdf\Teamplanpdf(
     is_array($cfgarray['pdf'] ?? null) ? $cfgarray['pdf'] : array(),
     $text,
     __DIR__,
-    URL_TO_IMGDIR
+    URL_TO_IMGDIR,
+    PATH_TO_IMGDIR
 ))->antwort(is_string($_GET['file'] ?? null) ? $_GET['file'] : '', (int)($_GET['selteam'] ?? 0), date('d.m.Y - H:i'));
 foreach ($lmo_pdf['kopf'] as $lmo_pdf_kopf) {
     header($lmo_pdf_kopf);

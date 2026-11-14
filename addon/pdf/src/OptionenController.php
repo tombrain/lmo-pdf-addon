@@ -23,9 +23,12 @@ final class OptionenController implements Controller
 {
     public const TODO = 'pdfoptions';
 
-    /** Die Einstellungen: Schluessel in cfg.txt => erlaubte Werte (der erste ist die Vorgabe); null: freier Text */
+    /**
+     * Die Einstellungen: Schluessel in cfg.txt => erlaubte Werte (der erste ist die Vorgabe) oder die
+     * Art: text (eine Zeile), datei (ein Dateiname ohne Ordner) oder farbe (#rrggbb).
+     */
     public const EINSTELLUNGEN = [
-        'lmo_pdf_homepage' => null,
+        'lmo_pdf_homepage' => 'text',
         'lmo_show_gameday' => ['1', '0'],
         'lmo_show_table' => ['1', '0'],
         'lmo_show_nextgameday' => ['1', '0'],
@@ -34,6 +37,22 @@ final class OptionenController implements Controller
         'lmo_pdf_serie' => ['1', '0'],
         'lmo_pdf_teamnamen' => ['0', '1', '2'],
         'lmo_pdf_teamfett' => ['0', '1'],
+        'lmo_show_pdfimg' => ['1', '0'],
+        'lmo_pdf_bild' => 'datei',
+        'lmo_show_rectangle' => ['1', '0'],
+        'lmo_pdf_balkenfarbe' => 'farbe',
+        'lmo_pdf_schriftfarbe' => 'farbe',
+        'lmo_pdf_matchday_icon' => ['0', '1'],
+        'lmo_pdf_table_icon' => ['1', '0'],
+        'lmo_pdf_nmatchday_icon' => ['0', '1'],
+        'lmo_pdf_schedule_icon' => ['0', '1'],
+        'lmo_pdf_teamplanicon' => ['0', '1'],
+    ];
+
+    /** Die Farben: Schluessel => [Vorgabe, Praefix der drei Werte im alten Addon] */
+    private const FARBEN = [
+        'lmo_pdf_balkenfarbe' => [Gestaltung::BALKENFARBE, 'RectangleColor'],
+        'lmo_pdf_schriftfarbe' => [Gestaltung::SCHRIFTFARBE, 'TextColor'],
     ];
 
     /**
@@ -57,11 +76,11 @@ final class OptionenController implements Controller
         $meldung = '';
         if ($a->text('save') == '1') {
             $neu = [];
-            foreach (self::EINSTELLUNGEN as $schluessel => $erlaubt) {
-                $wert = trim($a->text('x' . $schluessel));
-                // unbekannte Werte (auch ein fehlendes Feld) behalten den bisherigen
-                if ($a->gesetzt('x' . $schluessel) && ($erlaubt === null || in_array($wert, $erlaubt, true))) {
-                    $neu[$schluessel] = $erlaubt === null ? str_replace(["\r", "\n"], '', $wert) : $wert;
+            foreach (self::EINSTELLUNGEN as $schluessel => $art) {
+                // ungueltige Werte (auch ein fehlendes Feld) behalten den bisherigen
+                $wert = $a->gesetzt('x' . $schluessel) ? self::gueltig($art, $a->text('x' . $schluessel)) : null;
+                if ($wert !== null) {
+                    $neu[$schluessel] = $wert;
                 }
             }
             $konfiguration = $konfiguration->mit(['pdf' => array_replace(self::werte($konfiguration->addon('pdf')), $neu)]);
@@ -84,6 +103,7 @@ final class OptionenController implements Controller
 
     /**
      * Die Einstellungen mit Vorgaben fuer fehlende oder ungueltige; andere Werte in cfg.txt bleiben.
+     * Fehlt eine Farbe, gilt die des alten Addons (drei Werte 0.0 bis 1.0), sonst die Vorgabe.
      *
      * @param array<string, string> $cfg
      * @return array<string, string>
@@ -91,11 +111,38 @@ final class OptionenController implements Controller
     public static function werte(array $cfg): array
     {
         $werte = [];
-        foreach (self::EINSTELLUNGEN as $schluessel => $erlaubt) {
-            $wert = $cfg[$schluessel] ?? null;
-            $werte[$schluessel] = $erlaubt === null ? (string) $wert : (in_array($wert, $erlaubt, true) ? (string) $wert : $erlaubt[0]);
+        foreach (self::EINSTELLUNGEN as $schluessel => $art) {
+            $wert = self::gueltig($art, $cfg[$schluessel] ?? null);
+            $werte[$schluessel] = match (true) {
+                $wert !== null => $wert,
+                $art === 'farbe' => Gestaltung::farbe($cfg, $schluessel, self::FARBEN[$schluessel][1], self::FARBEN[$schluessel][0]),
+                $art === 'datei' => 'logo.png',
+                $art === 'text' => '',
+                default => $art[0],
+            };
         }
 
         return $werte + $cfg;
+    }
+
+    /**
+     * Ein Wert, wie er gespeichert wird; null, wenn er nicht gueltig ist.
+     *
+     * @param list<string>|string $art
+     */
+    private static function gueltig(array|string $art, ?string $wert): ?string
+    {
+        if ($wert === null) {
+            return null;
+        }
+        $wert = trim(str_replace(["\r", "\n"], '', $wert));
+
+        return match (true) {
+            is_array($art) => in_array($wert, $art, true) ? $wert : null,
+            $art === 'farbe' => preg_match('/^#[0-9a-fA-F]{6}$/', $wert) === 1 ? strtolower($wert) : null,
+            // nur ein Name im Ordner img/pdf, kein Weg hinaus
+            $art === 'datei' => $wert !== '' && basename($wert) === $wert && !str_starts_with($wert, '.') ? $wert : null,
+            default => $wert,
+        };
     }
 }

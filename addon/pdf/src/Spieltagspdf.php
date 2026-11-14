@@ -36,6 +36,6 @@ final class Spieltagspdf extends PdfSeite
                 'tabelle' => $this->wert('lmo_show_table', '1') != '0',
                 'folge' => $this->wert('lmo_show_nextgameday', '1') != '0',
             ],
-        ], $werte['name'] . '-' . $werte['st']);
+        ], $werte['name'] . '-' . $werte['st'], $liga, ['spieltag', 'tabelle', 'folge']);
     }
 }

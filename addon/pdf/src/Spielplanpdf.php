@@ -30,6 +30,6 @@ final class Spielplanpdf extends PdfSeite
         $werte = Spielplan::werte($liga);
 
         // Dateiname wie bisher: "Ligaspielplan_<Liga>"
-        return $this->pdf('spielplan.html.twig', $werte + ['jetzt' => $jetzt], $this->t(107) . '_' . $werte['name']);
+        return $this->pdf('spielplan.html.twig', $werte + ['jetzt' => $jetzt], $this->t(107) . '_' . $werte['name'], $liga, ['spielplan']);
     }
 }

@@ -2,18 +2,29 @@
 
   SPDX-License-Identifier: GPL-3.0-or-later
 
-  Gemeinsamer Stil der PDF-Seiten.
+  Gemeinsamer Stil der PDF-Seiten. Mit Logo ist oben, mit Balken (g.balken) links und rechts mehr Rand.
 -#}
+{% set oben = g.logo ? 38 : 18 %}
+{% set seite = g.balken ? 26 : 15 %}
 <style>
-  @page { margin: 18mm 15mm 16mm 15mm; }
+  @page { margin: {{ oben }}mm {{ seite }}mm 16mm {{ seite }}mm; }
   body { font-family: "DejaVu Sans", sans-serif; font-size: 9pt; color: #000; }
-  header { position: fixed; top: -12mm; left: 0; right: 0; font-size: 7pt; color: #555; text-align: right; }
+  header { position: fixed; top: {{ (g.logo ? 3 : 6) - oben }}mm; left: 0; right: 0; font-size: 7pt; color: #555; text-align: right; }
   footer { position: fixed; bottom: -10mm; left: 0; right: 0; font-size: 7pt; color: #555; text-align: center; }
+  .logo { position: fixed; top: {{ 9 - oben }}mm; left: 0; right: 0; height: 26mm; text-align: center; }
+  .logo img { height: 26mm; }
+{% if g.balken %}
+  .balken { position: fixed; top: {{ 2.8 - oben }}mm; bottom: -13.2mm; width: 14.1mm; background-color: {{ g.balken.farbe }}; }
+  .balken.links { left: {{ 2.5 - seite }}mm; }
+  .balken.rechts { right: {{ 2.5 - seite }}mm; }
+  .balken .homepage { position: absolute; left: {{ (14.1 - (hoehe - 5.6)) / 2 }}mm; top: {{ (hoehe - 5.6 - 14.1) / 2 }}mm; width: {{ hoehe - 5.6 }}mm; height: 14.1mm; line-height: 14.1mm; transform: rotate(90deg); text-align: center; font-size: 16pt; color: {{ g.balken.schrift }}; }
+{% endif %}
   h1 { font-size: 15pt; margin: 0 0 4mm 0; }
   table { width: 100%; border-collapse: collapse; margin: 0 0 5mm 0; }
   caption { font-weight: bold; font-size: 10pt; text-align: left; padding: 0 0 1.5mm 0; }
   th { border-bottom: 1px solid #000; padding: 1mm 1.5mm; text-align: left; }
   td { padding: 0.8mm 1.5mm; border-bottom: 0.5px solid #ccc; }
+  img.wappen { height: 3.5mm; vertical-align: middle; }
   .zahl, th.zahl { text-align: right; }
   .mitte, th.mitte { text-align: center; }
   .hinweis { font-size: 7.5pt; text-align: center; margin: -3mm 0 5mm 0; }

@@ -18,8 +18,7 @@
 </style>
 </head>
 <body>
-<header>{{ jetzt }} {{ t[103] }}</header>
-<footer>{{ homepage }}</footer>
+{% include '_rahmen.html.twig' %}
 {% for a in abschnitte %}
 {% if not loop.first %}
 <div class="seite"></div>
@@ -31,9 +30,9 @@
   <tr>
     <td>{{ s.datum }}</td>
     <td>{{ s.zeit }}</td>
-    <td class="zahl">{% if fett and s.heimEigen %}<b>{{ s.heim }}</b>{% else %}{{ s.heim }}{% endif %}</td>
+    <td class="zahl">{% if fett and s.heimEigen %}<b>{{ s.heim }}</b>{% else %}{{ s.heim }}{% endif %}{% if g.mitWappen.teamplan and g.wappen[s.heim] is defined %} <img class="wappen" src="{{ g.wappen[s.heim] }}" alt="">{% endif %}</td>
     <td class="mitte">-</td>
-    <td>{% if fett and not s.heimEigen %}<b>{{ s.gast }}</b>{% else %}{{ s.gast }}{% endif %}</td>
+    <td>{% if g.mitWappen.teamplan and g.wappen[s.gast] is defined %}<img class="wappen" src="{{ g.wappen[s.gast] }}" alt=""> {% endif %}{% if fett and not s.heimEigen %}<b>{{ s.gast }}</b>{% else %}{{ s.gast }}{% endif %}</td>
     <td class="mitte">{{ s.ergebnis }}</td>
   </tr>
 {% endfor %}

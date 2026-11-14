@@ -152,6 +152,37 @@ class PdfAddonTest extends TestCase
         self::assertStringContainsString('name="xlmo_pdf_format" value="1" onClick="dolmoedit()" checked', $seite->html, 'gezeigt wird das Gespeicherte');
     }
 
+    public function testGestaltungSpeichern(): void
+    {
+        $speichern = fn (array $felder, array $bisher = []): array => (function () use ($felder, $bisher): array {
+            $this->addon()->adminController()[0]->zeige(self::kontext('admin', ['todo' => 'pdfoptions', 'save' => '1'] + $felder, '', 2, ['pdf' => $bisher]));
+            $cfg = parse_ini_file($this->config . '/pdf/cfg.txt', false, INI_SCANNER_RAW);
+            self::assertIsArray($cfg);
+
+            return $cfg;
+        })();
+
+        $cfg = $speichern(['xlmo_pdf_balkenfarbe' => '#FF8000', 'xlmo_pdf_bild' => 'verein.png', 'xlmo_show_rectangle' => '0', 'xlmo_pdf_schedule_icon' => '1']);
+        self::assertSame(['#ff8000', 'verein.png', '0', '1'], [$cfg['lmo_pdf_balkenfarbe'], $cfg['lmo_pdf_bild'], $cfg['lmo_show_rectangle'], $cfg['lmo_pdf_schedule_icon']]);
+
+        $cfg = $speichern(['xlmo_pdf_balkenfarbe' => 'rot', 'xlmo_pdf_bild' => '../../config/cfg.txt'], ['lmo_pdf_balkenfarbe' => '#00ff00', 'lmo_pdf_bild' => 'verein.png']);
+        self::assertSame(['#00ff00', 'verein.png'], [$cfg['lmo_pdf_balkenfarbe'], $cfg['lmo_pdf_bild']], 'ungueltig: das Bisherige bleibt');
+
+        $cfg = $speichern([], ['RectangleColorRed' => '0.0', 'RectangleColorGreen' => '0.5', 'RectangleColorBlue' => '0.0']);
+        self::assertSame('#008000', $cfg['lmo_pdf_balkenfarbe'], 'die Farbe des alten Addons wird uebernommen');
+    }
+
+    public function testGestaltungZeigen(): void
+    {
+        $html = $this->addon()->adminController()[0]->zeige(self::kontext('admin', ['todo' => 'pdfoptions'], '', 2, ['pdf' => ['lmo_pdf_schriftfarbe' => '#123456']]))->html;
+
+        self::assertStringContainsString('type="color" name="xlmo_pdf_balkenfarbe" value="#0000ff"', $html);
+        self::assertStringContainsString('type="color" name="xlmo_pdf_schriftfarbe" value="#123456"', $html);
+        self::assertStringContainsString('name="xlmo_pdf_bild" size="20" maxlength="80" value="logo.png"', $html);
+        self::assertStringContainsString('name="xlmo_pdf_table_icon" value="1" onClick="dolmoedit()" checked', $html, 'Wappen in der Tabelle: Vorgabe an');
+        self::assertStringContainsString('name="xlmo_pdf_teamplanicon" value="0" onClick="dolmoedit()" checked', $html);
+    }
+
     public function testImLmo(): void
     {
         $instanz = Support\Instanz::neu()->mitNeuemAddon();

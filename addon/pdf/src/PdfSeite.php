@@ -25,8 +25,9 @@ abstract class PdfSeite
      * @param array<int|string, mixed> $text die Sprachtexte (die des Addons unter 'pdf')
      * @param string $ordner Ordner des Addons (Vorlagen, Bilder)
      * @param string $bilder Adresse der Bilder des LMO (fuer die Meldung)
+     * @param string $bilderordner Pfad zum Bilderordner des LMO (Logo, Wappen; PATH_TO_IMGDIR)
      */
-    public function __construct(protected LigaLader $lader, protected array $cfg, protected array $text, protected string $ordner, protected string $bilder)
+    public function __construct(protected LigaLader $lader, protected array $cfg, protected array $text, protected string $ordner, protected string $bilder, protected string $bilderordner = '')
     {
     }
 
@@ -52,18 +53,22 @@ abstract class PdfSeite
     }
 
     /**
-     * Eine Vorlage als PDF.
+     * Eine Vorlage als PDF, mit der Gestaltung (Logo, Balken, Wappen) als g.
      *
      * @param array<string, mixed> $werte
      * @param string $name Dateiname ohne Endung (Zeichen ausser Buchstaben, Ziffern, . und - fallen weg)
+     * @param list<string> $teile die Teile mit eigenem Schalter fuer Wappen (Gestaltung::WAPPEN)
      * @return array{kopf: list<string>, inhalt: string}
      */
-    protected function pdf(string $vorlage, array $werte, string $name, string $ausrichtung = 'portrait'): array
+    protected function pdf(string $vorlage, array $werte, string $name, ?Liga $liga, array $teile, string $ausrichtung = 'portrait'): array
     {
         $html = Vorlagen::zeige($this->ordner . '/vorlagen', $vorlage, $werte + [
             'text' => $this->text,
             't' => is_array($this->text['pdf'] ?? null) ? $this->text['pdf'] : [],
             'homepage' => $this->wert('lmo_pdf_homepage'),
+            'g' => (new Gestaltung($this->cfg, $this->bilderordner))->werte($liga, $teile),
+            // Hoehe der Seite in mm (A4), fuer die Homepage im Balken
+            'hoehe' => $ausrichtung === 'landscape' ? 210 : 297,
         ]);
         $name = (string) preg_replace('/[^\w.-]+/u', '', $name) . '.pdf';
 

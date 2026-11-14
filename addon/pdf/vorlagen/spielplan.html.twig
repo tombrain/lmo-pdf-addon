@@ -16,14 +16,13 @@
 </style>
 </head>
 <body>
-<header>{{ jetzt }} {{ t[103] }}</header>
-<footer>{{ homepage }}</footer>
+{% include '_rahmen.html.twig' %}
 <h1>{{ name }} - {{ t[104] }}</h1>
 {% for tag in spieltage %}
 {% if loop.index0 > 0 and loop.index0 is divisible by(4) %}
 <div class="seite"></div>
 {% endif %}
-{{ m.spiele(tag.spiele, tag.st ~ '. ' ~ text[2], text, t) }}
+{{ m.spiele(tag.spiele, tag.st ~ '. ' ~ text[2], text, t, g.mitWappen.spielplan ? g.wappen : {}) }}
 {% endfor %}
 </body>
 </html>

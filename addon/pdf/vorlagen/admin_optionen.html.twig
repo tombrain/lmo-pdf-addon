@@ -28,6 +28,31 @@
                   <td class="nobr"><input class="lmo-formular-input" type="text" name="xlmo_pdf_homepage" size="30" maxlength="80" value="{{ k.lmo_pdf_homepage }}" onChange="dolmoedit()"></td>
                 </tr>
                 <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[210]|raw }}">{{ t[209]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_show_pdfimg', k.lmo_show_pdfimg, zeigen) }}&nbsp;&nbsp;<input class="lmo-formular-input" type="text" name="xlmo_pdf_bild" size="20" maxlength="80" value="{{ k.lmo_pdf_bild }}" onChange="dolmoedit()"></td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[113]|raw }}">{{ t[112]|raw }}</acronym></td>
+                  <td class="nobr">{{ f.auswahl('lmo_show_rectangle', k.lmo_show_rectangle, zeigen) }}</td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right"><acronym title="{{ t[227]|raw }}">{{ t[226]|raw }}</acronym></td>
+                  <td class="nobr"><input class="lmo-formular-input" type="color" name="xlmo_pdf_balkenfarbe" value="{{ k.lmo_pdf_balkenfarbe }}" onChange="dolmoedit()"></td>
+                </tr>
+                <tr>
+                  <td class="nobr" align="right">{{ t[198]|raw }}</td>
+                  <td class="nobr"><input class="lmo-formular-input" type="color" name="xlmo_pdf_schriftfarbe" value="{{ k.lmo_pdf_schriftfarbe }}" onChange="dolmoedit()"></td>
+                </tr>
+                <tr>
+                  <th class="nobr" colspan="2"><acronym title="{{ t[262]|raw }}">{{ t[261]|raw }}</acronym></th>
+                </tr>
+{% for schluessel, name in {lmo_pdf_matchday_icon: t[265], lmo_pdf_table_icon: t[266], lmo_pdf_nmatchday_icon: t[267], lmo_pdf_schedule_icon: t[107], lmo_pdf_teamplanicon: t[206]} %}
+                <tr>
+                  <td class="nobr" align="right">{{ name|raw }}</td>
+                  <td class="nobr">{{ f.auswahl(schluessel, k[schluessel], zeigen) }}</td>
+                </tr>
+{% endfor %}
+                <tr>
                   <th class="nobr" colspan="2">{{ t[204]|raw }}</th>
                 </tr>
                 <tr>
