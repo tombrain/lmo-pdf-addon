@@ -1,0 +1,56 @@
+# Baut das ZIP zum Kopieren: addon/pdf mit seiner Laufzeit (Dompdf in addon/pdf/vendor), die Pfade
+# ab dem Ordner des LMO. Von Hand als Artefakt; bei einem Tag v* zusaetzlich als Release.
+name: ZIP
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # die aelteste unterstuetzte Version, damit die Laufzeit ueberall laeuft (composer.json: platform 8.1)
+      - name: PHP einrichten
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: gd, mbstring, dom
+          coverage: none
+
+      - name: Laufzeit des Addons (Dompdf nach addon/pdf/vendor)
+        run: composer install --no-dev --no-interaction --no-progress --optimize-autoloader --working-dir=addon/pdf
+
+      - name: Name des ZIP
+        id: name
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then version="${GITHUB_REF_NAME}"; else version="dev-${GITHUB_SHA::7}"; fi
+          echo "datei=lmo-pdf-addon-${version}.zip" >> "$GITHUB_OUTPUT"
+
+      - name: ZIP bauen
+        run: |
+          mkdir -p build
+          zip -qr "build/${{ steps.name.outputs.datei }}" addon/pdf LICENSE
+          # was zum Laufen da sein muss
+          unzip -l "build/${{ steps.name.outputs.datei }}" > build/inhalt.txt
+          for datei in addon/pdf/addon.php addon/pdf/pdf-tabelle.php addon/pdf/vendor/autoload.php addon/pdf/vendor/dompdf/dompdf/src/Dompdf.php addon/pdf/config-default/cfg.txt LICENSE; do
+            grep -q " ${datei}\$" build/inhalt.txt || { echo "fehlt im ZIP: ${datei}"; exit 1; }
+          done
+
+      - name: Als Artefakt ablegen
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.name.outputs.datei }}
+          path: build/${{ steps.name.outputs.datei }}
+
+      - name: Release zum Tag
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" "build/${{ steps.name.outputs.datei }}" --title "${GITHUB_REF_NAME}" --generate-notes
