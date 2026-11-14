@@ -1,0 +1,22 @@
+14. Spieltag
+Datum Uhrzeit	HeimGast	Ergebnis
+Tabelle - 14. Spieltag
+PlatzWechsel in den AdminbereichSpielesun+ Tore- ToreDiff.Pkt.
+Hinweis: Tabellenstand ohne vorgezogene Spiele!
+Saisonende
+{JETZT}
+basic
+your URL or Teamname
+Spielplan 3.1.6 Addon for LMO 4 © 2004 by Tim Schumacher
+__.__.____ __:__	Mannschaft 7Mannschaft 2	_ : _
+__.__.____ __:__	Mannschaft 5Mannschaft 4	_ : _
+__.__.____ __:__	Mannschaft 3Mannschaft 6	3 : 1
+__.__.____ __:__	Mannschaft 1Mannschaft 8	3 : 3
+1Mannschaft 3	9 612 25 14 11 19
+2Mannschaft 1	9 513 19 17 2 16
+3Mannschaft 4	7 412 18 11 7 13
+4Mannschaft 8	7 322 19 19 0 11
+5Mannschaft 6	10 226 15 26 -11 8
+6Mannschaft 5	7 214 9 9 0 7
+7Mannschaft 7	7 214 16 18 -2 7
+8Mannschaft 2	6 213 8 15 -7 7

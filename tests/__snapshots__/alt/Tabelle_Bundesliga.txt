@@ -1,0 +1,47 @@
+1. Spieltag
+Datum Uhrzeit	HeimGast	Ergebnis
+Tabelle - 1. Spieltag
+PlatzWechsel in den AdminbereichSpielesun+ Tore- ToreDiff.Pkt.
+Hinweis: Tabellenstand ohne vorgezogene Spiele!
+2. Spieltag
+Datum Uhrzeit	HeimGast	Ergebnis
+{JETZT}
+1. Bundesliga 2024/25
+your URL or Teamname
+Spielplan 3.1.6 Addon for LMO 4 © 2004 by Tim Schumacher
+23.08.2024 20:30 Borussia M'gladbachBayer 04 Leverkusen _ : _
+24.08.2024 15:30 Borussia DortmundEintracht Frankfurt _ : _
+24.08.2024 15:30	RB LeipzigVfL Bochum	_ : _
+24.08.2024 15:30	TSG HoffenheimHolstein Kiel	_ : _
+24.08.2024 15:30	SC FreiburgVfB Stuttgart	_ : _
+24.08.2024 15:30	FC AugsburgWerder Bremen	_ : _
+24.08.2024 15:30	VfL WolfsburgBayern München	_ : _
+24.08.2024 15:30	FSV Mainz 051.FC Union Berlin	_ : _
+24.08.2024 15:30	FC St. Pauli1.FC Heidenheim	_ : _
+1Eintracht Frankfurt 0 000 0 0 0 0
+2VfL Wolfsburg	0 000 0 0 0 0
+3SC Freiburg	0 000 0 0 0 0
+4Borussia M'gladbach 0 000 0 0 0 0
+5FC Augsburg	0 000 0 0 0 0
+6Borussia Dortmund	0 000 0 0 0 0
+7FC St. Pauli	0 000 0 0 0 0
+8Holstein Kiel	0 000 0 0 0 0
+9Werder Bremen	0 000 0 0 0 0
+10TSG Hoffenheim	0 000 0 0 0 0
+111.FC Union Berlin	0 000 0 0 0 0
+121.FC Heidenheim	0 000 0 0 0 0
+13RB Leipzig	0 000 0 0 0 0
+14VfL Bochum	0 000 0 0 0 0
+15VfB Stuttgart	0 000 0 0 0 0
+16FSV Mainz 05	0 000 0 0 0 0
+17Bayer 04 Leverkusen 0 000 0 0 0 0
+18Bayern München	0 000 0 0 0 0
+31.08.2024 15:30 Bayer 04 LeverkusenRB Leipzig	_ : _
+31.08.2024 15:30	VfB StuttgartFSV Mainz 05	_ : _
+31.08.2024 15:30	Bayern MünchenSC Freiburg	_ : _
+31.08.2024 15:30 Eintracht FrankfurtTSG Hoffenheim	_ : _
+31.08.2024 15:30	1.FC HeidenheimFC Augsburg	_ : _
+31.08.2024 15:30	Werder BremenBorussia Dortmund _ : _
+31.08.2024 15:30	1.FC Union BerlinFC St. Pauli	_ : _
+31.08.2024 15:30	VfL BochumBorussia M'gladbach _ : _
+31.08.2024 15:30	Holstein KielVfL Wolfsburg	_ : _

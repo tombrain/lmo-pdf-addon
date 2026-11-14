@@ -1,0 +1,27 @@
+3. Spieltag
+Datum Uhrzeit	HeimGast	Ergebnis
+Tabelle - 3. Spieltag
+PlatzWechsel in den AdminbereichSpielesun+ Tore- ToreDiff.Pkt.
+Hinweis: Tabellenstand ohne vorgezogene Spiele!
+4. Spieltag
+Datum Uhrzeit	HeimGast	Ergebnis
+{JETZT}
+wertung
+your URL or Teamname
+Spielplan 3.1.6 Addon for LMO 4 © 2004 by Tim Schumacher
+__.__.____ __:__	Mannschaft 1Mannschaft 5	2 : 0
+__.__.____ __:__	Mannschaft 3Mannschaft 7	2 : 2
+__.__.____ __:__	Mannschaft 6Mannschaft 4	2 : 3
+__.__.____ __:__	Mannschaft 8Mannschaft 2	_ : _
+1Mannschaft 1	3 210 8 3 5 7
+2Mannschaft 4	3 210 4 3 1 7
+3Mannschaft 7	3 120 7 6 1 5
+4Mannschaft 3	3 111 4 2 2 4
+5Mannschaft 5	3 102 4 4 0 3
+6Mannschaft 6	3 102 3 6 -3 3
+7Mannschaft 8	2 011 1 2 -1 1
+8Mannschaft 2	2 002 0 5 -5 0
+__.__.____ __:__	Mannschaft 2Mannschaft 6	0* : 0
+__.__.____ __:__	Mannschaft 4Mannschaft 1	2 : 2
+__.__.____ __:__	Mannschaft 5Mannschaft 3	_ : _
+__.__.____ __:__	Mannschaft 7Mannschaft 8	2 : 1

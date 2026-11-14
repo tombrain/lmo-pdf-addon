@@ -1,0 +1,103 @@
+1. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+2. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+3. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+4. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+{JETZT}
+wertung
+your URL or Teamname
+Spielplan 3.1.6 Addon for LMO 4 © 2004 by Tim Schumacher
+__.__.____ __:__ Mannschaft 1Mannschaft 7 3 : 3
+__.__.____ __:__ Mannschaft 3Mannschaft 4 0 : 0*
+__.__.____ __:__ Mannschaft 5Mannschaft 2 3 : 0
+__.__.____ __:__ Mannschaft 8Mannschaft 6 0 : 1
+__.__.____ __:__ Mannschaft 2Mannschaft 3 0 : 2
+__.__.____ __:__ Mannschaft 4Mannschaft 8 1 : 1
+__.__.____ __:__ Mannschaft 6Mannschaft 1 0 : 3
+__.__.____ __:__ Mannschaft 7Mannschaft 5 2 : 1
+__.__.____ __:__ Mannschaft 1Mannschaft 5 2 : 0
+__.__.____ __:__ Mannschaft 3Mannschaft 7 2 : 2
+__.__.____ __:__ Mannschaft 6Mannschaft 4 2 : 3
+__.__.____ __:__ Mannschaft 8Mannschaft 2 _ : _
+__.__.____ __:__ Mannschaft 2Mannschaft 6 0* : 0
+__.__.____ __:__ Mannschaft 4Mannschaft 1 2 : 2
+__.__.____ __:__ Mannschaft 5Mannschaft 3 _ : _
+__.__.____ __:__ Mannschaft 7Mannschaft 8 2 : 1
+
+5. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+6. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+7. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+8. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+{JETZT}
+wertung
+your URL or Teamname
+Spielplan 3.1.6 Addon for LMO 4 © 2004 by Tim Schumacher
+__.__.____ __:__ Mannschaft 1Mannschaft 3 1 : 0
+__.__.____ __:__ Mannschaft 4Mannschaft 2 _ : _
+__.__.____ __:__ Mannschaft 6Mannschaft 7 _ : _
+__.__.____ __:__ Mannschaft 8Mannschaft 5 _ : _
+__.__.____ __:__ Mannschaft 1Mannschaft 2 0 : 3
+__.__.____ __:__ Mannschaft 3Mannschaft 8 3 : 0
+__.__.____ __:__ Mannschaft 5Mannschaft 6 0 : 0*
+__.__.____ __:__ Mannschaft 7Mannschaft 4 3 : 3
+__.__.____ __:__ Mannschaft 2Mannschaft 7 3 : 0
+__.__.____ __:__ Mannschaft 4Mannschaft 5 0* : 0
+__.__.____ __:__ Mannschaft 6Mannschaft 3 0 : 0
+__.__.____ __:__ Mannschaft 8Mannschaft 1 _ : _
+__.__.____ __:__ Mannschaft 7Mannschaft 1 1 : 1
+__.__.____ __:__ Mannschaft 4Mannschaft 3 _ : _
+__.__.____ __:__ Mannschaft 2Mannschaft 5 3 : 2
+__.__.____ __:__ Mannschaft 6Mannschaft 8 _ : _
+
+9. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+10. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+11. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+12. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+{JETZT}
+wertung
+your URL or Teamname
+Spielplan 3.1.6 Addon for LMO 4 © 2004 by Tim Schumacher
+__.__.____ __:__ Mannschaft 3Mannschaft 2 0 : 0*
+__.__.____ __:__ Mannschaft 8Mannschaft 4 3 : 1
+__.__.____ __:__ Mannschaft 1Mannschaft 6 0 : 0
+__.__.____ __:__ Mannschaft 5Mannschaft 7 3 : 2
+__.__.____ __:__ Mannschaft 5Mannschaft 1 2 : 3
+__.__.____ __:__ Mannschaft 7Mannschaft 3 1 : 1
+__.__.____ __:__ Mannschaft 4Mannschaft 6 0 : 0
+__.__.____ __:__ Mannschaft 2Mannschaft 8 0* : 0
+__.__.____ __:__ Mannschaft 6Mannschaft 2 1 : 1
+__.__.____ __:__ Mannschaft 1Mannschaft 4 0 : 0
+__.__.____ __:__ Mannschaft 3Mannschaft 5 3 : 1
+__.__.____ __:__ Mannschaft 8Mannschaft 7 3 : 2
+__.__.____ __:__ Mannschaft 3Mannschaft 1 _ : _
+__.__.____ __:__ Mannschaft 2Mannschaft 4 2 : 0
+__.__.____ __:__ Mannschaft 7Mannschaft 6 _ : _
+__.__.____ __:__ Mannschaft 5Mannschaft 8 0 : 0
+
+13. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+14. Spieltag
+Datum Uhrzeit HeimGast	Ergebnis
+{JETZT}
+wertung
+your URL or Teamname
+Spielplan 3.1.6 Addon for LMO 4 © 2004 by Tim Schumacher
+__.__.____ __:__ Mannschaft 2Mannschaft 1 _ : _
+__.__.____ __:__ Mannschaft 8Mannschaft 3 0 : 1
+__.__.____ __:__ Mannschaft 6Mannschaft 5 0 : 2
+__.__.____ __:__ Mannschaft 4Mannschaft 7 0 : 1
+__.__.____ __:__ Mannschaft 7Mannschaft 2 0 : 0*
+__.__.____ __:__ Mannschaft 5Mannschaft 4 1 : 0
+__.__.____ __:__ Mannschaft 3Mannschaft 6 3 : 0
+__.__.____ __:__ Mannschaft 1Mannschaft 8 2 : 2
